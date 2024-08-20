@@ -48,11 +48,25 @@ public class Main {
             StringBuilder builder = new StringBuilder();
             // Extract and print all matched URLs
             while (matcher.find()) {
-                String fileName = matcher.group(3).substring(matcher.group(3).lastIndexOf('/') + 1);
-                ImageDownloader.downloadImage(matcher.group(1),
-                        file.getParent() + "/"
-                                + fileName);
-                matcher.appendReplacement(builder, fileName);
+                String group = matcher.group(3);
+                int lasted = group == null ? -1 : group.lastIndexOf('/');
+                if (lasted > 0 && !group.contains(":")) {
+                    String fileName = group.substring(lasted + 1).toLowerCase();
+                    if (fileName.endsWith(".png") || fileName.endsWith(".jpg")
+                            || fileName.endsWith(".gif") || fileName.endsWith(".svg")
+                    || matcher.group(1).contains("assets.")) {
+                        if (!fileName.contains(".")) {
+                            fileName = fileName + ".png";
+                        }
+                        if (!Files.exists(Path.of(file.getParent() + "/"
+                                + fileName))) {
+                            ImageDownloader.downloadImage(matcher.group(1),
+                                    file.getParent() + "/"
+                                            + fileName);
+                            matcher.appendReplacement(builder, fileName);
+                        }
+                    }
+                }
             }
             matcher.appendTail(builder);
             Files.writeString(file.toPath(), builder.toString(), UTF_8);
