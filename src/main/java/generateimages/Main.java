@@ -52,17 +52,17 @@ public class Main {
                 int lasted = group == null ? -1 : group.lastIndexOf('/');
                 if (lasted > 0 && !group.contains(":")) {
                     String fileName = group.substring(lasted + 1).toLowerCase();
-                    if (fileName.endsWith(".png") || fileName.endsWith(".jpg")
-                            || fileName.endsWith(".gif") || fileName.endsWith(".svg")
-                    || matcher.group(1).contains("assets.")) {
+                    if (fileName.endsWith(".png")
+                            || fileName.endsWith(".jpg")
+                            || fileName.endsWith(".gif")
+                            || fileName.endsWith(".svg")
+                            || matcher.group(1).contains("assets.")) {
                         if (!fileName.contains(".")) {
                             fileName = fileName + ".png";
                         }
-                        if (!Files.exists(Path.of(file.getParent() + "/"
-                                + fileName))) {
-                            ImageDownloader.downloadImage(matcher.group(1),
-                                    file.getParent() + "/"
-                                            + fileName);
+                        if (!Files.exists(Path.of(file.getParent() + "/" + fileName))) {
+                            ImageDownloader.downloadImage(
+                                    matcher.group(1), file.getParent() + "/" + fileName);
                             matcher.appendReplacement(builder, fileName);
                         }
                     }
