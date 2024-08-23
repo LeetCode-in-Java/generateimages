@@ -19,7 +19,7 @@ public class ImageDownloader {
         // Create an HttpClient
         HttpClient client = HttpClient.newHttpClient();
 
-        // Create an HttpRequest for the image URL with a timeout of 10 seconds
+        // Create an HttpRequest for the image URL with a timeout of 20 seconds
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(imageUrl))
                 .timeout(Duration.ofSeconds(20))  // Set timeout duration
