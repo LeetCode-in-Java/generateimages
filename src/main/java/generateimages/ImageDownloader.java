@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
 
 public class ImageDownloader {
 
@@ -18,8 +19,11 @@ public class ImageDownloader {
         // Create an HttpClient
         HttpClient client = HttpClient.newHttpClient();
 
-        // Create an HttpRequest for the image URL
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(imageUrl)).build();
+        // Create an HttpRequest for the image URL with a timeout of 10 seconds
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(imageUrl))
+                .timeout(Duration.ofSeconds(20))  // Set timeout duration
+                .build();
 
         // Send the request and receive the response
         HttpResponse<InputStream> response =
