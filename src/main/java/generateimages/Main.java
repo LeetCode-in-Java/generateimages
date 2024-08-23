@@ -63,8 +63,8 @@ public class Main {
                         if (!Files.exists(Path.of(file.getParent() + "/" + fileName))) {
                             ImageDownloader.downloadImage(
                                     matcher.group(1), file.getParent() + "/" + fileName);
-                            matcher.appendReplacement(builder, fileName);
                         }
+                        matcher.appendReplacement(builder, fileName);
                     }
                 }
             }
