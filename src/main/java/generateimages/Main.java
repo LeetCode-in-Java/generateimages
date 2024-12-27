@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 public class Main {
     private static final String URL_REGEX = "(https?://[\\w-]+(\\.[\\w-]+)+(/[^\\s)]*)?)";
     private static final Pattern PATTERN = Pattern.compile(URL_REGEX);
+    private static final String GROUP_AND_SOLUTION_REGEX = "(g[^\\\\]+\\\\s[^\\\\]+)";
+    private static final Pattern PATTERN_G_AND_S = Pattern.compile(GROUP_AND_SOLUTION_REGEX);
 
     private static void fillFilesRecursively(Path directory, final List<File> resultFiles)
             throws IOException {
@@ -63,6 +65,11 @@ public class Main {
                         if (!Files.exists(Path.of(file.getParent() + "/" + fileName))) {
                             ImageDownloader.downloadImage(
                                     matcher.group(1), file.getParent() + "/" + fileName);
+                        }
+                        Matcher matcher2 = PATTERN_G_AND_S.matcher(file.getAbsolutePath());
+                        if (matcher2.find()) {
+                            fileName = "https://leetcode-in-java.github.io/src/main/java/"
+                                + matcher2.group(1).replace("\\", "/") + "/" + fileName;
                         }
                         matcher.appendReplacement(builder, fileName);
                     }
