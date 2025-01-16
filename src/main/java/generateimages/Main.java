@@ -68,8 +68,11 @@ public class Main {
                         }
                         Matcher matcher2 = PATTERN_G_AND_S.matcher(file.getAbsolutePath());
                         if (matcher2.find()) {
-                            fileName = "https://leetcode-in-java.github.io/src/main/java/"
-                                + matcher2.group(1).replace("\\", "/") + "/" + fileName;
+                            fileName =
+                                    "https://leetcode-in-java.github.io/src/main/java/"
+                                            + matcher2.group(1).replace("\\", "/")
+                                            + "/"
+                                            + fileName;
                         }
                         matcher.appendReplacement(builder, fileName);
                     }
